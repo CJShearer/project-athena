@@ -1,7 +1,7 @@
 {
-    "dir": "../../data/",
-    "bs_file": "test_BS-mnist-clean.npy",
-    "label_file": "test_Label-mnist-clean.npy",
+    "dir": "../data/",
+    "bs_file": "subsamples-mnist-ratio_0.1-285633.156.npy",
+    "label_file": "sublabels-mnist-ratio_0.1-285633.156.npy",
     "ae_files": [
         "test_AE-mnist-cnn-clean-fgsm_eps0.1.npy",
         "test_AE-mnist-cnn-clean-fgsm_eps0.15.npy",
