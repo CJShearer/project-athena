@@ -1,0 +1,21 @@
+{
+  "num_attacks": 1,
+  "configs0": {
+    "attack": "cw",
+    "description": "cw-standard",
+    "norm": "l2",
+    "lr": 0.02
+  },
+  "configs1": {
+    "attack": "cw",
+    "description": "cw-standard",
+    "norm": "l2",
+    "lr": 0.2
+  },
+  "configs2": {
+    "attack": "cw",
+    "description": "cw-standard",
+    "norm": "l2",
+    "lr": 0.002
+  }
+}

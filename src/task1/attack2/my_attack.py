@@ -1,9 +1,15 @@
+import os
+
 from tutorials.craft_adversarial_examples import generate_ae
 
 # parse configurations (into a dictionary) from json file
-model_configs = load_from_json(args.model_configs)
-data_configs = load_from_json(args.data_configs)
-attack_configs = load_from_json(args.attack_configs)
+from utils.file import load_from_json
+from utils.model import load_lenet
+import numpy as np
+
+model_configs = load_from_json('model-config.json')
+data_configs = load_from_json('data-config.json')
+attack_configs = load_from_json('attack-config.json')
 
 # load the targeted model
 model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
