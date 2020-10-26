@@ -1,0 +1,6 @@
+{
+    "dir": "../../data/",
+    "bs_file": "test_BS-mnist-clean.npy",
+    "label_file": "test_Label-mnist-clean.npy",
+    "ae_files": ["4.927242783.npy", "5.433822516.npy", "5.915683666.npy", "6.430934375.npy", "6.925905749.npy"]
+}
