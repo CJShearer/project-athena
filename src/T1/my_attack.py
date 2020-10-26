@@ -10,7 +10,7 @@ from utils.model import load_lenet
 from matplotlib import pyplot as plt
 
 model_configs = load_from_json("model-mnist.json")
-data_configs = load_from_json("data-mnist.json")
+data_configs = load_from_json("results/sample.json")
 attack_configs = load_from_json("attack-zk-mnist.json")
 
 # load the targeted model
@@ -34,7 +34,8 @@ labels = np.load(label_file)
 # data_bs = data_bs[:10]
 #labels = labels[:10]
 #print(len(data_bs))
-#generate_ae(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir="./results")
+#generate_ae(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, #output_dir="./results")
+generate_ae(model=target, data=data_bs, labels=labels, attack_configs=attack_configs) #save=True, #output_dir="./results")
 
 # parse configurations (into a dictionary) from json file
 trans_configs = load_from_json("athena-mnist.json")
