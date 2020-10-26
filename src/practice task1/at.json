@@ -2,24 +2,24 @@
   "num_attacks": 5,
   "configs0": {
     "attack": "jsma",
-    "description": "jsma_eps0.30",
-    "eps": 0.30
+    "description": "jsma_gamma0.30",
+    "gamma": 0.30
 
   },
   "configs1": {
     "attack": "jsma",
-    "description": "jsma_eps0.40",
-    "eps": 0.40
+    "description": "jsma_gamma0.40",
+    "gamma": 0.40
   },
   "configs2": {
     "attack": "jsma",
-    "description": "jsma_eps0.50",
-    "eps": 0.50
+    "description": "jsma_gamma0.50",
+    "gamma": 0.50
   },
   "configs3": {
     "attack": "jsma",
-    "description": "jsma_eps0.60",
-    "eps": 0.60
+    "description": "jsma_gamma0.60",
+    "gamma": 0.60
   },
   "configs4": {
     "attack": "jsma",

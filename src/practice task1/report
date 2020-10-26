@@ -1,0 +1,9 @@
+We worked on JSMA attack on a convolutional neural network (CNN) trained MNIST dataset using five variations of epsilion.
+
+epsilon: 0.30, 0.40, 0.50, 0.60, 0.70
+
+using notebooks/Task1_GenerateAEs_ZeroKnowledgeModel.ipynb:
+
+src/configs/task1/md.json
+src/configs/task1/at.json
+src/configs/task1/dt.json

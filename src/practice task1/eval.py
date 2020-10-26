@@ -4,7 +4,6 @@ import os
 import time
 from tutorials.craft_adversarial_examples import generate_ae
 from matplotlib import pyplot as plt
-
 from utils.model import load_lenet
 from utils.file import load_from_json
 from utils.metrics import error_rate
