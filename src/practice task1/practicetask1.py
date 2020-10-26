@@ -7,7 +7,7 @@ import numpy as np
 
 
 model_configs = load_from_json("md.json")
-data_configs = load_from_json("dt.json")
+data_configs = load_from_json("dt2.json")
 attack_configs = load_from_json("at.json")
 
 # load the targeted model

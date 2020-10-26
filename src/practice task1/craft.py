@@ -17,7 +17,7 @@ if __name__ == '__main__':
                         default='md.json',
                         help='Folder where models stored in.')
     parser.add_argument('-d', '--data-configs', required=False,
-                        default='dt.json',
+                        default='dt2.json',
                         help='Folder where test data stored in.')
     parser.add_argument('-a', '--attack-configs', required=False,
                         default='at.json',
@@ -54,6 +54,6 @@ if __name__ == '__main__':
     labels = np.load(label_file)
 
     # generate adversarial examples for a small subset
-    data_bs = data_bs[:10]
-    labels = labels[:10]
+#    data_bs = data_bs[:10]
+#    labels = labels[:10]
     generate_ae(model=target, data=data_bs, labels=labels, attack_configs=attack_configs)
