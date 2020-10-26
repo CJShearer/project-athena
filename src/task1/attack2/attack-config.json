@@ -33,31 +33,31 @@
   "configs5": {
     "attack": "cw",
     "description": "cw-Lf-lr0.02",
-    "norm": "lf",
+    "norm": "linf",
     "lr": 0.02
   },
   "configs6": {
     "attack": "cw",
     "description": "cw-Lf-lr0.2",
-    "norm": "lf",
+    "norm": "linf",
     "lr": 0.2
   },
   "configs7": {
     "attack": "cw",
     "description": "cw-Lf-lr0.002",
-    "norm": "lf",
+    "norm": "linf",
     "lr": 0.002
   },
   "configs8": {
     "attack": "cw",
     "description": "cw-Lf-lr0.99",
-    "norm": "lf",
+    "norm": "linf",
     "lr": 0.99
   },
   "configs9": {
     "attack": "cw",
     "description": "cw-Lf-lr0.00002",
-    "norm": "lf",
+    "norm": "linf",
     "lr": 0.00002
   }
 }
