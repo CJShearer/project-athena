@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from task1.attack2 import my_attack
+# from task1.attack2 import my_attack
 
 # call my attack with my_attack(model_config name, data_config name, attack_config name)
 from tutorials.craft_adversarial_examples import generate_ae
@@ -9,7 +9,7 @@ from utils.file import load_from_json
 from utils.model import load_lenet
 
 
-def my_attack(model_config, data_config, attack_config, ratio=0.1, output_dir=None):
+def gen_attack(model_config, data_config, attack_config, ratio=0.1, output_dir=None):
     model_configs = load_from_json(model_config)
     data_configs = load_from_json(data_config)
     attack_configs = load_from_json(attack_config)
@@ -29,7 +29,8 @@ def my_attack(model_config, data_config, attack_config, ratio=0.1, output_dir=No
     data_bs, labels = subsampling(data_bs, labels, 10, ratio)
     # data_bs = data_bs[:100]
     # labels = labels[:100]
-    generate_ae(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir=output_dir)
+    generate_ae(model=target, data=data_bs, labels=labels, attack_configs=attack_configs)#, save=True, output_dir=output_dir)
 
 
-# my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.2, output_dir="./results")
+gen_attack('./attack2/model-config.json', './attack2/results/sub-data-config.json', './attack2/attack-config.json')
+# gen_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.2, output_dir="./results")
