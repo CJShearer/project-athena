@@ -2,6 +2,7 @@ import os
 
 from attacks.attack import generate
 # from tutorials.craft_adversarial_examples import generate_ae
+from tutorials.eval_model import evaluate
 from utils.data import subsampling
 # parse configurations (into a dictionary) from json file
 from utils.file import load_from_json
@@ -93,11 +94,15 @@ def my_attack(model_config, data_config, attack_config, ratio=0.1):
 
     # generate adversarial examples for a small subset
     print(len(data_bs))
-    data_bs, labels = subsampling(data_bs, labels, 10, ratio)
+    data_bs, labels = subsampling(data_bs, labels, 10, ratio, 'results', '10')
     # data_bs = data_bs[:100]
     # labels = labels[:100]
     print(len(data_bs))
     generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir="./results", filenames=data_configs.get('ae_files'))
 
 
-my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
+# my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
+trans_configs = load_from_json('athena-mnist.json')
+model_configs = load_from_json('model-config.json')
+data_configs = load_from_json('./results/sub-data-config.json')
+evaluate(trans_configs, model_configs, data_configs)
