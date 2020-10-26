@@ -1,0 +1,12 @@
+{
+    "dir": "./results",
+    "bs_file": "subsamples-10-ratio_0.001-5.142948666.npy",
+    "label_file": "sublabels-10-ratio_0.001-5.142948666.npy",
+    "ae_files": [
+        "4.927242783.npy",
+        "5.433822516.npy",
+        "5.915683666.npy",
+        "6.430934375.npy",
+        "6.925905749.npy"
+    ]
+}
