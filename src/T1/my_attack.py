@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 from tutorials.craft_adversarial_examples import generate_ae
-from tutorials.eval_model import evaluate
+from task1.attack2.my_attack import evaluate_models
 from utils.data import subsampling
 from utils.file import load_from_json
 from utils.model import load_lenet
