@@ -10,8 +10,8 @@
         "cw-L2-lr0.00002.npy",
         "cw-Lf-lr0.02.npy",
         "cw-Lf-lr0.2.npy",
-        "cw-Lf-lr0.002",
-        "cw-Lf-lr0.99",
-        "cw-Lf-lr0.00002"
+        "cw-Lf-lr0.002.npy",
+        "cw-Lf-lr0.99.npy",
+        "cw-Lf-lr0.00002.npy"
     ]
 }

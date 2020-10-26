@@ -101,3 +101,9 @@ def evaluate(trans_configs, model_configs,
 
         # TODO: collect and dump the evaluation results to file(s) such that you can analyze them later.
         print(">>> Evaluations on [{}]:\n{}".format(ae_file, results))
+
+
+wd = load_from_json('../configs/experiment/athena-mnist.json')
+att = load_from_json('dt2.json')
+model = load_from_json('md.json')
+evaluate(wd, model, att)
