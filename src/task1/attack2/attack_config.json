@@ -1,0 +1,18 @@
+{
+  "num_attacks": 3,
+   "configs0": {
+    "attack": "fgsm",
+    "description": "FGSM_eps0.25",
+    "eps": 0.25
+  },
+  "configs1": {
+    "attack": "jsma",
+    "description": "jsma0.50.21",
+    "theta": 0.2,
+    "gamma": 0.5
+  },
+  "configs2": {
+    "attack": "pgd",
+    "description": "pgd"
+  }
+}
