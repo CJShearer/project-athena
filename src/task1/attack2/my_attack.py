@@ -94,7 +94,7 @@ def my_attack(model_config, data_config, attack_config, ratio=0.1):
 
     # generate adversarial examples for a small subset
     print(len(data_bs))
-    data_bs, labels = subsampling(data_bs, labels, 10, ratio, 'results', '10')
+    data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath='results', filename='10')
     # data_bs = data_bs[:100]
     # labels = labels[:100]
     print(len(data_bs))
