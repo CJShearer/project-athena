@@ -1,0 +1,17 @@
+{
+    "dir": "../../../data/",
+    "bs_file": "test_BS-mnist-clean.npy",
+    "label_file": "test_Label-mnist-clean.npy",
+    "ae_files": [
+        "cw-L2-lr0.02.npy",
+        "cw-L2-lr0.2.npy",
+        "cw-L2-lr0.002.npy",
+        "cw-L2-lr0.99.npy",
+        "cw-L2-lr0.00002.npy",
+        "cw-Lf-lr0.02.npy",
+        "cw-Lf-lr0.2.npy",
+        "cw-Lf-lr0.002",
+        "cw-Lf-lr0.99",
+        "cw-Lf-lr0.00002"
+    ]
+}
