@@ -190,31 +190,31 @@ def evaluate_models(trans_configs, model_configs,
 
 
 
-model_configs = load_from_json('model-config.json')
-data_configs = load_from_json('./results/sub-data-config.json')
-attack_configs = load_from_json('attack-config.json')
+#model_configs = load_from_json('model-config.json')
+#data_configs = load_from_json('./results/sub-data-config.json')
+#attack_configs = load_from_json('attack-config.json')
 
 # load the targeted model
-model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
-target = load_lenet(file=model_file, wrap=True)
+#model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
+#target = load_lenet(file=model_file, wrap=True)
 
 # load the benign samples
-data_file = os.path.join(data_configs.get('dir'), data_configs.get('bs_file'))
-data_bs = np.load(data_file)
+#data_file = os.path.join(data_configs.get('dir'), data_configs.get('bs_file'))
+#data_bs = np.load(data_file)
  # load the corresponding true labels
-label_file = os.path.join(data_configs.get('dir'), data_configs.get('label_file'))
-labels = np.load(label_file)
-
-# generate adversarial examples for a small subset
-print(len(data_bs))
-data_bs, labels = subsampling(data_bs, labels, 10, ratio=1)
-# data_bs = data_bs[:100]
-# labels = labels[:100]
-print(len(data_bs))
-generate_ae_with_names(target, data_bs, labels, attack_configs)
-
-# my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
-trans_configs = load_from_json('athena-mnist.json')
-model_configs = load_from_json('model-config.json')
-data_configs = load_from_json('./results/sub-data-config.json')
-evaluate_models(trans_configs, model_configs, data_configs)
+# label_file = os.path.join(data_configs.get('dir'), data_configs.get('label_file'))
+# labels = np.load(label_file)
+#
+# # generate adversarial examples for a small subset
+# print(len(data_bs))
+# data_bs, labels = subsampling(data_bs, labels, 10, ratio=1)
+# # data_bs = data_bs[:100]
+# # labels = labels[:100]
+# print(len(data_bs))
+# generate_ae_with_names(target, data_bs, labels, attack_configs)
+#
+# # my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
+# trans_configs = load_from_json('athena-mnist.json')
+# model_configs = load_from_json('model-config.json')
+# data_configs = load_from_json('./results/sub-data-config.json')
+# evaluate_models(trans_configs, model_configs, data_configs)
