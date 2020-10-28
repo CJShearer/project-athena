@@ -12,6 +12,7 @@ from utils.model import load_lenet, load_pool
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+import csv
 
 
 # copied from tutorial modified to use names in data config
@@ -94,15 +95,16 @@ def my_attack(model_config, data_config, attack_config, ratio=0.1):
     labels = np.load(label_file)
 
     # generate adversarial examples for a small subset
-    print(len(data_bs))
-    data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath='results', filename='10')
+    # print(len(data_bs))
+    data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath='../../../task1/attack2/results', filename='10')
     # data_bs = data_bs[:100]
     # labels = labels[:100]
-    print(len(data_bs))
-    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir="./results", filenames=data_configs.get('ae_files'))
+    # print(len(data_bs))
+    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir="../../../task1/attack2/results", filenames=data_configs.get('ae_files'))
+
 
 def evaluate_models(trans_configs, model_configs,
-             data_configs, save=False, output_dir=None):
+             data_configs, save=False, output_dir=None, filenames=None):
     """
     Apply transformation(s) on images.
     :param trans_configs: dictionary. The collection of the parameterized transformations to test.
@@ -187,34 +189,50 @@ def evaluate_models(trans_configs, model_configs,
 
         # TODO: collect and dump the evaluation results to file(s) such that you can analyze them later.
         print(">>> Evaluations on [{}]:\n{}".format(ae_file, results))
+        test_result = ">>> Evaluations on [{}]:\n{}".format(ae_file, results)
+        if save:
+            if output_dir is None:
+                raise ValueError("Cannot save images to a none path.")
+            if filenames is None or len(filenames) < len(ae_list):
+                # save with a random name
+                name = ae_list[index].split('.npy')[0]+'_eval.csv'
+                file = os.path.join(output_dir, "{}.".format(name))
+                print("Save the adversarial examples to file [{}].".format(file))
+                with open(file, 'w') as csv_file:
+                    fieldnames = list(results.keys())
+                    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerow(results)
+                # np.save(file, test_result)
+            else:
+                # save with a file name
+                file = os.path.join(output_dir, filenames[index])
+                print("Save the adversarial examples to file [{}].".format(file))
+                writer = csv.writer(open(file, 'w'))
+                writer.writerow(test_result)
+                # np.save(file, test_result)
 
 
+if __name__ == '__main__':
+    model_configs = load_from_json('../../../task1/attack2/model-config.json')
+    data_configs = load_from_json('../../../task1/attack2/sub-data-config.json')
+    attack_configs = load_from_json('../../../task1/attack2/attack-config.json')
 
-model_configs = load_from_json('model-config.json')
-data_configs = load_from_json('./results/sub-data-config.json')
-attack_configs = load_from_json('attack-config.json')
+    # load the targeted model
+    model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
+    target = load_lenet(file=model_file, wrap=True)
 
-# load the targeted model
-model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
-target = load_lenet(file=model_file, wrap=True)
-
-# load the benign samples
-data_file = os.path.join(data_configs.get('dir'), data_configs.get('bs_file'))
-data_bs = np.load(data_file)
- # load the corresponding true labels
-label_file = os.path.join(data_configs.get('dir'), data_configs.get('label_file'))
-labels = np.load(label_file)
-
-# generate adversarial examples for a small subset
-print(len(data_bs))
-data_bs, labels = subsampling(data_bs, labels, 10, ratio=1)
-# data_bs = data_bs[:100]
-# labels = labels[:100]
-print(len(data_bs))
-generate_ae_with_names(target, data_bs, labels, attack_configs)
-
-# my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
-trans_configs = load_from_json('athena-mnist.json')
-model_configs = load_from_json('model-config.json')
-data_configs = load_from_json('./results/sub-data-config.json')
-evaluate_models(trans_configs, model_configs, data_configs)
+    # load the benign samples
+    data_file = os.path.join(data_configs.get('dir'), data_configs.get('bs_file'))
+    data_bs = np.load(data_file)
+    # load the corresponding true labels
+    label_file = os.path.join(data_configs.get('dir'), data_configs.get('label_file'))
+    labels = np.load(label_file)
+    # generate adversarial examples for a small subset
+    # generate_ae_with_names(target, data_bs, labels, attack_configs)
+    # exit()
+    # my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
+    trans_configs = load_from_json('../../../task1/attack2/athena-mnist.json')
+    # model_configs = load_from_json('model-config.json')
+    data_configs = load_from_json('../../../task1/attack2/sub-data-config.json')
+    evaluate_models(trans_configs, model_configs, data_configs, save=True, output_dir='../../../task1/attack2/results', filenames=None)
