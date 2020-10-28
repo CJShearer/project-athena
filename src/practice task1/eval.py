@@ -108,5 +108,4 @@ def evaluate(trans_configs, model_configs,
 wd = load_from_json('../configs/demo/athena-mnist.json')
 att = load_from_json('result/dt2.json')
 model = load_from_json('md.json')
-evaluate_models(wd, model, att, save=False, output_dir='')
-# evaluate(wd, model, att)
+evaluate(wd, model, att)
