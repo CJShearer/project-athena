@@ -1,6 +1,6 @@
 import os
 import numpy as np
-# from task1.attack2 import my_attack
+# from Task1.attack2 import my_attack
 
 # call my attack with my_attack(model_config name, data_config name, attack_config name)
 from tutorials.craft_adversarial_examples import generate_ae

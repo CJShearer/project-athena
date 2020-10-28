@@ -96,11 +96,11 @@ def my_attack(model_config, data_config, attack_config, ratio=0.1):
 
     # generate adversarial examples for a small subset
     # print(len(data_bs))
-    data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath='../../../task1/attack2/results', filename='10')
+    data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath='../../../Task1/attack2/results', filename='10')
     # data_bs = data_bs[:100]
     # labels = labels[:100]
     # print(len(data_bs))
-    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir="../../../task1/attack2/results", filenames=data_configs.get('ae_files'))
+    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir="../../../Task1/attack2/results", filenames=data_configs.get('ae_files'))
 
 
 def evaluate_models(trans_configs, model_configs,
@@ -214,9 +214,9 @@ def evaluate_models(trans_configs, model_configs,
 
 
 if __name__ == '__main__':
-    model_configs = load_from_json('../../../task1/attack2/model-config.json')
-    data_configs = load_from_json('../../../task1/attack2/sub-data-config.json')
-    attack_configs = load_from_json('../../../task1/attack2/attack-config.json')
+    model_configs = load_from_json('../../../Task1/attack2/model-config.json')
+    data_configs = load_from_json('../../../Task1/attack2/sub-data-config.json')
+    attack_configs = load_from_json('../../../Task1/attack2/attack-config.json')
 
     # load the targeted model
     model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     # generate_ae_with_names(target, data_bs, labels, attack_configs)
     # exit()
     # my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
-    trans_configs = load_from_json('../../../task1/attack2/athena-mnist.json')
+    trans_configs = load_from_json('../../../Task1/attack2/athena-mnist.json')
     # model_configs = load_from_json('model-config.json')
-    data_configs = load_from_json('../../../task1/attack2/sub-data-config.json')
-    evaluate_models(trans_configs, model_configs, data_configs, save=True, output_dir='../../../task1/attack2/results', filenames=None)
+    data_configs = load_from_json('../../../Task1/attack2/sub-data-config.json')
+    evaluate_models(trans_configs, model_configs, data_configs, save=True, output_dir='../../../Task1/attack2/results', filenames=None)
