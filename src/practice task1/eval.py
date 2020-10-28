@@ -11,7 +11,7 @@ from attacks.attack import generate
 from utils.model import load_pool
 from utils.metrics import error_rate, get_corrections
 from models.athena import Ensemble, ENSEMBLE_STRATEGY
-
+from scripts.zhymir_scripts.my_attack import evaluate_models
 # copied from tutorials/eval_model.py
 def evaluate(trans_configs, model_configs,
              data_configs, save=False, output_dir=None):
@@ -103,7 +103,10 @@ def evaluate(trans_configs, model_configs,
         print(">>> Evaluations on [{}]:\n{}".format(ae_file, results))
 
 
-wd = load_from_json('../configs/experiment/athena-mnist.json')
-att = load_from_json('dt2.json')
+
+
+wd = load_from_json('../configs/demo/athena-mnist.json')
+att = load_from_json('result/dt2.json')
 model = load_from_json('md.json')
-evaluate(wd, model, att)
+evaluate_models(wd, model, att, save=False, output_dir='')
+# evaluate(wd, model, att)
