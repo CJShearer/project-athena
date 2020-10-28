@@ -3,7 +3,7 @@ import os
 from attacks.attack import generate
 # from tutorials.craft_adversarial_examples import generate_ae
 from models.athena import ENSEMBLE_STRATEGY, Ensemble
-from tutorials.eval_model import evaluate
+#from tutorials.eval_model import evaluate
 from utils.data import subsampling
 # parse configurations (into a dictionary) from json file
 from utils.file import load_from_json
