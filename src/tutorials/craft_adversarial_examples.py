@@ -49,7 +49,7 @@ def generate_ae(model, data, labels, attack_configs, save=False, output_dir=None
         print(">>> error rate:", err)
 
         # plotting some examples
-        num_plotting = min(data.shape[0], 0)
+        num_plotting = min(data.shape[0], 3)
         for i in range(num_plotting):
             img = data_adv[i].reshape((img_rows, img_cols))
             plt.imshow(img, cmap='gray')
