@@ -11,7 +11,11 @@ model_configs = load_from_json("md.json")
 data_configs = load_from_json("dt2.json")
 =======
 data_configs = load_from_json("result/dt2.json")
+<<<<<<< HEAD
 >>>>>>> 6ec7374720c91fd8e3d1b402b37bd364b7a7a8db
+=======
+>>>>>>> 5007ebbb5f5c855d164aecf8c0d82ae725532b9b
+>>>>>>> eb83fac7eb5cfc2cdcd38ab0de37595583db9943
 attack_configs = load_from_json("at.json")
 
 # load the targeted model
