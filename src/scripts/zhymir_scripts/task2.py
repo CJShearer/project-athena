@@ -9,8 +9,9 @@ from utils.file import load_from_json
 from utils.model import load_lenet, load_pool
 from utils.data import subsampling
 from utils.data import get_dataloader
-from keras.engine.saving import save_model
+# from keras.engine.saving import save_model
 from keras.callbacks import ModelCheckpoint
+from keras.models import save_model
 from models.image_processor import transform
 
 
@@ -29,14 +30,15 @@ def shuffle(data, labels):
 
 # modified from toy model on stackoverflow
 def add_checkpoint(filepath, callback_list):
-    checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
-    callback_list.extend([checkpoint])
-
+    checkpoint = ModelCheckpoint(filepath+'_checkpoint', monitor='loss', verbose=1, save_best_only=False, mode='min')
+    # callback_list.extend([checkpoint])
+    callback_list = [checkpoint]
 
 model_config = load_from_json('../../configs/task2/zhymir_configs/model-config.json')
 data_config = load_from_json('../../configs/task2/zhymir_configs/data-config.json')
 WD_config = load_from_json('../../configs/task2/zhymir_configs/task2-athena-mnist.json')
 
+filepath = os.path.join('../../../Task2/models', 'zhymir_model')
 # use load pool to collect WDs and UM
 pool, _ = load_pool(trans_configs=WD_config, model_configs=model_config)
 
@@ -68,6 +70,10 @@ train_labels, test_labels = bs_labels[:test_size], bs_labels[-test_size:]
 # make model trained on WD ouputs, or make model that uses WD outputs as input layer
 target.fit(train_data, train_labels)
 
+# save_model(target, filepath=filepath, overwrite=False, include_optimizer=True)
+exit()
+call_backs = []
+add_checkpoint(filepath, call_backs)
 AE_files = [os.path.join(data_config.get('dir'), AE_name) for AE_name in data_config.get('ae_files')]
 
 for AE_file in AE_files:
@@ -85,9 +91,10 @@ for AE_file in AE_files:
         # transform a small subset
         data_trans = transform(data_bs[:50], trans_args)
         # fit the transformed images by the corresponding model (weak defense)
-        target.fit(AE_train_data, AE_train_labels)
+        target.fit(AE_train_data, AE_train_labels, callbacks=call_backs)
+        add_checkpoint(filepath, call_backs)
 
 
-filepath = os.path.join('../../../Task2/models', 'zhymir_model.h5')
 # optional save model
-# save_model(target, filepath=filepath, overwrite=True, include_optimizer=True)
+# save_model(target, filepath=filepath, overwrite=False, include_optimizer=True)
+target.save('zhymir_model', '../../../Task2/models')
