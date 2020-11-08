@@ -1,0 +1,10 @@
+{
+    "dir": "../../../data",
+    "bs_file": "test_BS-mnist-clean.npy",
+    "label_file": "test_Label-mnist-clean.npy",
+    "ae_files": [
+        "test_AE-mnist-cnn-clean-bim_ord2_eps0.75.npy",
+        "test_AE-mnist-cnn-clean-bim_ord2_eps1.2.npy"
+
+    ]
+}
