@@ -1,4 +1,9 @@
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+import csv
+
 from attacks.attack import generate
 # from tutorials.craft_adversarial_examples import generate_ae
 from models.athena import ENSEMBLE_STRATEGY, Ensemble
@@ -8,10 +13,6 @@ from utils.data import subsampling
 from utils.file import load_from_json
 from utils.metrics import error_rate, get_corrections
 from utils.model import load_lenet, load_pool
-import numpy as np
-import matplotlib.pyplot as plt
-import time
-import csv
 
 
 # copied from tutorial modified to use names in data config
