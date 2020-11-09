@@ -36,7 +36,7 @@ class WeakDefense(ClassifierNeuralNetwork, ClassifierGradients, Classifier):
         elif "<class 'keras" in str(type(model)):
             self.is_tensorflow = False
         else:
-            raise TypeError("Type of model not recognized:" + type(model))
+            raise TypeError("Type of model not recognized:" + str(type(model)))
 
         self._initialize_params(model, use_logits, input_layer, output_layer)
 
