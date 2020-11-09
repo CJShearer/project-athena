@@ -59,7 +59,7 @@ if __name__ == '__main__':
     model_config = load_from_json('../../configs/task2/zhymir_configs/model-config.json')
     data_config = load_from_json('../../configs/task2/zhymir_configs/data-config.json')
     WD_config = load_from_json('../../configs/task2/zhymir_configs/task2-athena-mnist.json')
-    filepath = os.path.join('../../../Task2/models', 'zhymir_model')
+    filepath = os.path.join('../../../Task2/models', 'zhymir_model.h5')
     # use load pool to collect WDs and UM
     pool, _ = load_pool(trans_configs=WD_config, model_configs=model_config, active_list=True)
     # turns WD into WeakDefense objects for Ensemble
@@ -125,5 +125,4 @@ if __name__ == '__main__':
 
     print('finished')
     # optional save model
-    # save_model(target, filepath=filepath, overwrite=False, include_optimizer=True)
-    target.save('zhymir_model.h5', '../../../Task2/models')
+    target.save(filepath)
