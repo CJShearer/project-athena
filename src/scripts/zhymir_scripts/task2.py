@@ -33,32 +33,30 @@ def shuffle(data, labels):
 
 
 # modified from toy model on stackoverflow
-def add_checkpoint(filepath, callback_list):
-    checkpoint = ModelCheckpoint(filepath+'_checkpoint', monitor='loss', verbose=1, save_best_only=False, mode='min')
+def add_checkpoint(filepath_p, callback_list):
+    checkpoint = ModelCheckpoint(filepath_p+'_checkpoint', monitor='loss', verbose=1, save_best_only=False, mode='min')
     # callback_list.extend([checkpoint])
     callback_list = [checkpoint]
 
 
-def train_model(WD, model, x, y, batch_size=1, epochs=1, load_from_checkpoint=False, save_checkpoint=False, callback_list=None):
-    prediction = np.array([WD.predict(x, raw=True)]) # must be in vector because single
+def train_model(wd, model, x, y, batch_size_p=1, epochs=1,
+                load_from_checkpoint=False, save_checkpoint=False, callback_list_p=None):
+    prediction = np.array([wd.predict(x, raw=True)]) # must be in vector because single
     # print(y)
     y = np.array([y])
     # y = keras.utils.to_categorical(y)
     # print(prediction.shape)
     # print(y.shape)
     # print(prediction)
-    if load_from_checkpoint and callback_list:
-        model.fit(prediction, y, callbacks=callback_list, epochs=epochs, batch_size=batch_size)
+    if load_from_checkpoint and callback_list_p:
+        model.fit(prediction, y, callbacks=callback_list_p, epochs=epochs, batch_size=batch_size_p)
     else:
-        model.fit(prediction, y, epochs=epochs, batch_size=batch_size)
-    if save_checkpoint and callback_list:
-        add_checkpoint(callback_list)
+        model.fit(prediction, y, epochs=epochs, batch_size=batch_size_p)
+    if save_checkpoint and callback_list_p:
+        add_checkpoint(callback_list_p)
 
 
-def train_ensemble_model(model_p, data_config_p, wd_p, save=True, filepath_p=None):
-    batch_size = 10
-    test_size = 10
-
+def train_ensemble_model(model_p, data_config_p, wd_p, batch_size_p=1, test_size_p=10, save=True, filepath_p=None):
     # Load data
     data_file = os.path.join(data_config_p.get('dir'), data_config_p.get('bs_file'))
     data_bs = np.load(data_file)
@@ -71,13 +69,13 @@ def train_ensemble_model(model_p, data_config_p, wd_p, save=True, filepath_p=Non
     # subsampling didn't allow for ratios that were too high, so shuffle data instead
     bs_data, bs_labels = shuffle(data_bs, labels)
 
-    train_data, test_data = bs_data[:test_size], bs_data[-test_size:]
-    train_labels, test_labels = bs_labels[:test_size], bs_labels[-test_size:]
-
+    train_data, test_data = bs_data[:test_size_p], bs_data[-test_size_p:]
+    train_labels, test_labels = bs_labels[:test_size_p], bs_labels[-test_size_p:]
     # make model trained on WD ouputs, or make model that uses WD outputs as input layer
     # target.fit(train_data, train_labels) [no more]
     call_backs = []
-    train_model(wd_p, model_p, train_data, train_labels, batch_size=batch_size, epochs=500, save_checkpoint=True, callback_list=call_backs)
+    train_model(wd_p, model_p, train_data, train_labels, batch_size_p=batch_size_p,
+                epochs=500, save_checkpoint=True, callback_list_p=call_backs)
 
     # save_model(target, filepath=filepath, overwrite=False, include_optimizer=True)
     # exit()
@@ -87,10 +85,10 @@ def train_ensemble_model(model_p, data_config_p, wd_p, save=True, filepath_p=Non
     for AE_file in ae_files:
         ae_data = np.load(AE_file)
         ae_data, ae_labels = subsampling(ae_data, labels, 10, 0.2)
-        ae_train_data, ae_test_data = ae_data[:test_size], ae_data[-test_size:]
-        ae_train_labels, ae_test_labels = ae_labels[:test_size], ae_labels[-test_size:]
-        train_model(wd_p, model_p, ae_train_data, ae_train_labels, batch_size=batch_size, epochs=200,
-                    load_from_checkpoint=True, save_checkpoint=True, callback_list=call_backs)
+        ae_train_data, ae_test_data = ae_data[:test_size_p], ae_data[-test_size_p:]
+        ae_train_labels, ae_test_labels = ae_labels[:test_size_p], ae_labels[-test_size_p:]
+        train_model(wd_p, model_p, ae_train_data, ae_train_labels, batch_size_p=batch_size_p, epochs=200,
+                    load_from_checkpoint=True, save_checkpoint=True, callback_list_p=call_backs)
         # for id, model in pool.items():
         #     if id == 0: # skip the undefended model, which does not transform the image
         #         continue
@@ -108,14 +106,19 @@ def train_ensemble_model(model_p, data_config_p, wd_p, save=True, filepath_p=Non
     # optional save model
     if save and filepath_p:
         model_p.save(filepath_p)
+    return test_data, test_labels
 
 
 if __name__ == '__main__':
     # load config files: model-config, data-config
+    # Change these next 4 lines
     model_config = load_from_json('../../configs/task2/zhymir_configs/model-config.json')
     data_config = load_from_json('../../configs/task2/zhymir_configs/data-config.json')
     WD_config = load_from_json('../../configs/task2/zhymir_configs/task2-athena-mnist.json')
     filepath = os.path.join('../../../Task2/models', 'zhymir_model_batch_size_10.h5')
+    # change these 2
+    batch_size = 10
+    test_size = 10
     # use load pool to collect WDs and UM
     pool, _ = load_pool(trans_configs=WD_config, model_configs=model_config, active_list=True)
     # turns WD into WeakDefense objects for Ensemble
@@ -123,12 +126,15 @@ if __name__ == '__main__':
     WDs = Ensemble(WD_models, strategy=None)
     n = len(pool)  # number of WDs in use
     # Create target model for task
+    # Change the layers of this model for needs
     target = keras.models.Sequential([
         keras.layers.InputLayer(input_shape=(n, 10, 10), name='WD_layer'),
         keras.layers.Flatten(),
         keras.layers.Dense(units=100, activation='relu', name='D1'),
         keras.layers.Dense(10, name='output_layer', activation='softmax')
     ])
+    # define loss and optimizer for model
     target.compile('adam', 'categorical_crossentropy')
-    train_ensemble_model(target, data_config_p=data_config, filepath_p=filepath, wd_p=WDs, save=False)
+    train_ensemble_model(target, batch_size_p=batch_size, test_size_p=test_size,
+                         data_config_p=data_config, filepath_p=filepath, wd_p=WDs, save=False)
 
