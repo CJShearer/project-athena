@@ -1,0 +1,63 @@
+{
+  "num_attacks": 10,
+  "configs0": {
+    "attack": "cw",
+    "description": "cw-L2-lr0.02",
+    "norm": "l2",
+    "lr": 0.02
+  },
+  "configs1": {
+    "attack": "cw",
+    "description": "cw-L2-lr0.2",
+    "norm": "l2",
+    "lr": 0.2
+  },
+  "configs2": {
+    "attack": "cw",
+    "description": "cw-L2-lr0.002",
+    "norm": "l2",
+    "lr": 0.002
+  },
+  "configs3": {
+    "attack": "cw",
+    "description": "cw-L2-lr0.99",
+    "norm": "l2",
+    "lr": 0.99
+  },
+  "configs4": {
+    "attack": "cw",
+    "description": "cw-L2-lr0.00002",
+    "norm": "l2",
+    "lr": 0.00002
+  },
+  "configs5": {
+    "attack": "cw",
+    "description": "cw-Lf-lr0.02",
+    "norm": "linf",
+    "lr": 0.02
+  },
+  "configs6": {
+    "attack": "cw",
+    "description": "cw-Lf-lr0.2",
+    "norm": "linf",
+    "lr": 0.2
+  },
+  "configs7": {
+    "attack": "cw",
+    "description": "cw-Lf-lr0.002",
+    "norm": "linf",
+    "lr": 0.002
+  },
+  "configs8": {
+    "attack": "cw",
+    "description": "cw-Lf-lr0.99",
+    "norm": "linf",
+    "lr": 0.99
+  },
+  "configs9": {
+    "attack": "cw",
+    "description": "cw-Lf-lr0.00002",
+    "norm": "linf",
+    "lr": 0.00002
+  }
+}

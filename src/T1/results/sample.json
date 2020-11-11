@@ -1,0 +1,12 @@
+{
+    "dir": "./results",
+    "bs_file": "subsamples-10-ratio_0.001-5.142948666.npy",
+    "label_file": "sublabels-10-ratio_0.001-5.142948666.npy",
+    "ae_files": [
+        "pgd-eps0.1.npy",
+        "pgd-eps0.3.npy",
+        "pgd-eps0.5.npy",
+        "pgd-eps0.7.npy",
+        "pgd-eps0.8.npy"
+    ]
+}

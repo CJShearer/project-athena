@@ -1,0 +1,8 @@
+{
+    "dir": "./result",
+    "bs_file": "subsamples-sub-ratio_0.001-492679.984.npy",
+    "label_file": "sublabels-sub-ratio_0.001-492679.984.npy",
+    "ae_files": ["215272.937.npy", "215273.062.npy", "215273.156.npy", "215273.25.npy", "215273.343.npy"
+    ]
+}
+

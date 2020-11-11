@@ -1,0 +1,17 @@
+{
+    "dir": "../../../Task1/data",
+    "bs_file": "subsamples-10-ratio_0.001-477207.062.npy",
+    "label_file": "sublabels-10-ratio_0.001-477207.062.npy",
+    "ae_files": [
+        "cw-L2-lr0.02.npy",
+        "cw-L2-lr0.2.npy",
+        "cw-L2-lr0.002.npy",
+        "cw-L2-lr0.99.npy",
+        "cw-L2-lr0.00002.npy",
+        "cw-Lf-lr0.02.npy",
+        "cw-Lf-lr0.2.npy",
+        "cw-Lf-lr0.002.npy",
+        "cw-Lf-lr0.99.npy",
+        "cw-Lf-lr0.00002.npy"
+    ]
+}

@@ -1,0 +1,18 @@
+Here we consider an adversarial attack on a convolutional neural network (CNN) trained on a subset (10%) of the MNIST dataset using five variations of the basic iterative method (BIM). We hold the epsilon value constant at 0.10 while varying the maximum number of iterations to explore how this may impact the error rate of the undefeneded model (UM), an athena ensemble, and PGD-ADT. We test BIM with the following parameters:
+
+epsilon: 0.10
+max_iter: 100, 90, 80, 70, 60
+Using the following configurations, we generate AEs and evaluate their effectivness against the UM, the ensemble model, and PGD-ADT, using notebooks/Task1_GenerateAEs_ZeroKnowledgeModel.ipynb:
+
+src/configs/task1/athena-mnist.json
+src/configs/task1/attack-bim-mnist.json
+src/configs/task1/data-bim-mnist.json
+The AEs can be found at:
+
+AE-mnist-cnn-clean-bim_eps0.1_maxiter60.npy
+AE-mnist-cnn-clean-bim_eps0.1_maxiter70.npy
+AE-mnist-cnn-clean-bim_eps0.1_maxiter80.npy
+AE-mnist-cnn-clean-bim_eps0.1_maxiter90.npy
+AE-mnist-cnn-clean-bim_eps0.1_maxiter100.npy
+Undefended Model Results
+We find that the error rate drops only for the UM and only twice. We would expect these drops to occur only at 70 and 60, perhaps as some upper bound is reached. However, we find the interesting result that the drop in error rate occurs only from 100 to 90 and 70 to 60; the error rate is the same for 90, 80, and 70.
