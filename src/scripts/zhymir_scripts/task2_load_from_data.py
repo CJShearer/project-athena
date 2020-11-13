@@ -1,3 +1,5 @@
+""" Loads raw prediction data from npy files
+    to train model """
 import os
 import keras
 import numpy as np
