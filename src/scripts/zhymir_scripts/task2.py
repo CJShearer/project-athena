@@ -1,4 +1,6 @@
-
+"""" Takes input data from benign samples
+     and adversarial examples to train model
+     [not currently in use]"""
 
 import os
 import random

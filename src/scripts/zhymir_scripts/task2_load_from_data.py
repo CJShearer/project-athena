@@ -1,3 +1,5 @@
+""" Loads raw prediction data from npy files
+    to train model """
 import os
 import keras
 import numpy as np
@@ -16,29 +18,33 @@ data = np.load(os.path.join(data_path_root, 'arr_0.npy'))
 data = np.transpose(data, (0, 2, 1, 3))
 # for i in range(19):
 #     print(data[i].shape)
-wds = make_ensemble(wd_config=WD_config, model_config=model_config)
-batch_size = 10
-model = keras.models.Sequential([
-    keras.layers.InputLayer(input_shape=(wds._nb_classifiers, 10), name='WD_layer'),
-    keras.layers.Flatten(),
-    keras.layers.Dense(units=100, activation='relu', name='D1'),
-    keras.layers.Dense(10, name='output_layer', activation='softmax')
-])
-model.compile('adam', 'categorical_crossentropy')
+# wds = make_ensemble(wd_config=WD_config, model_config=model_config)
+# batch_size = 10
+# model = keras.models.Sequential([
+#     keras.layers.InputLayer(input_shape=(wds._nb_classifiers, 10), name='WD_layer'),
+#     keras.layers.Flatten(),
+#     keras.layers.Dense(units=100, activation='relu', name='D1'),
+#     keras.layers.Dense(10, name='output_layer', activation='softmax')
+# ])
+# model.compile('adam', 'categorical_crossentropy')
 train_x, test_x, train_y, test_y = train_test_split(data[0], labels, test_size=0.2)
-total_train_x, total_test_x = np.array([train_x]), np.array([test_x])
-total_train_y, total_test_y = np.array([train_y]), np.array([test_y])
-model.fit(train_x, train_y, epochs=10, batch_size=10, validation_split=0.1)
-call_back = []
-add_checkpoint(filepath_p=filepath, callback_list=call_back)
+# print(train_x.shape)
+total_train_x, total_test_x = train_x, test_x
+total_train_y, total_test_y = train_y, test_y
+# print(total_train_x.shape)
+# model.fit(train_x, train_y, epochs=10, batch_size=10, validation_split=0.1)
+# call_back = []
+# add_checkpoint(filepath_p=filepath, callback_list=call_back)
 for idx in range(len(data_config.get('ae_files'))):
     train_x, test_x, train_y, test_y = train_test_split(data[idx], labels, test_size=0.2)
-    total_train_x = np.append(total_train_x, np.array([train_x]))
-    total_test_x = np.append(total_test_x, np.array([test_x]))
-    total_train_y = np.append(total_train_y, np.array([train_y]))
-    total_test_y = np.append(total_test_y, np.array([test_y]))
-    model.fit(train_x, train_y,  callbacks=call_back, epochs=10, batch_size=batch_size)
-    add_checkpoint(filepath_p=filepath, callback_list=call_back)
+    total_train_x = np.concatenate((total_train_x, train_x))
+    # print(total_train_x.shape)
+    # exit()
+    total_test_x = np.concatenate((total_test_x, test_x))
+    total_train_y = np.concatenate((total_train_y, train_y))
+    total_test_y = np.concatenate((total_test_y, test_y))
+    # model.fit(train_x, train_y,  callbacks=call_back, epochs=10, batch_size=batch_size)
+    # add_checkpoint(filepath_p=filepath, callback_list=call_back)
 np.savez_compressed('train_test', train_data=total_train_x, test_data=total_test_x,
                     train_labels=total_train_y, test_labels=total_test_y)
-model.save(filepath)
+# model.save(filepath)
