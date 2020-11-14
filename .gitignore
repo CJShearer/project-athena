@@ -162,3 +162,5 @@ fabric.properties
 */train_labels.npy
 */test_data.npy
 */test_labels.npy
+*/arr_0.npy
+*/train_test.npz
