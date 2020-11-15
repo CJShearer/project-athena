@@ -9,6 +9,17 @@ def plot_model_figs(history_p, show=True, save=False, save_name=None):
     """ Plots model metrics with added ability to save.
         history_p is history.history object returned from model.fit or model.evaluate
         save_name: the name for the base, function adds postfix and .png end"""
+    if 'categorical_accuracy':
+        plt.plot(history_p['categorical_accuracy'])
+        plt.plot(history_p['val_categorical_accuracy'])
+        plt.title('model accuracy')
+        plt.ylabel('accuracy')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left')
+        if save and save_name:
+            plt.savefig(save_name+'_acc.png')
+        if show:
+            plt.show()
     if 'accuracy' in history_p:
         plt.plot(history_p['accuracy'])
         plt.plot(history_p['val_accuracy'])
