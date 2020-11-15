@@ -38,12 +38,12 @@ def plot_model_figs(history_p, show=True, save=False, save_name=None):
 if __name__ == '__main__':
     data_root = '../../../Task2/data'
     model_root = '../../../Task2/models'
-    model_path = os.path.join(model_root, 'zhymir_model_4_layer.h5')
-    model = load_model(model_path)
+    # model_path = os.path.join(model_root, 'zhymir_model_4_layer.h5')
+    # model = load_model(model_path, compile=False)
     history = load_from_json(os.path.join(data_root, 'zhymir_model_4_layer_history'))
     plot_model_figs(history)
-    # print(history)
-    # # exit()
+    print(history)
+    # exit()
     # if 'accuracy' in history:
     #     plt.plot(history['accuracy'])
     #     plt.plot(history['val_accuracy'])
