@@ -4,15 +4,19 @@ import numpy as np
 
 from utils.file import dump_to_json
 
-def train_model(data, labels, model_p, save, filename, save_history, h_filename):
+def train_model(data, labels, model_p, save=False, filename=None, save_history=False, h_filename=None):
     model_history = model_p.fit(data, labels, batch_size=10)
-    if save:
+    if save and filename:
         model_p.save(filename)
-        if save_history:
+        if save_history and h_filename:
             dump_to_json(model_history.history, h_filename)
+
 if __name__ == '__main__':
     train_data = np.load('train_test/train_data.npy')
     train_labels = np.load('train_test/train_labels.npy')
+    print(train_data.shape)
+    print(train_labels.shape)
+    # exit()
     model_root = '../../../Task2/models'
     history_root = '../../../Task2/data'
     filepath = os.path.join(model_root, 'zhymir_model_2_layer.h5')
@@ -27,6 +31,8 @@ if __name__ == '__main__':
         keras.layers.Dense(10, name='output_layer', activation='softmax')
     ])
     model.compile('adam', 'categorical_crossentropy')
+    # train_model(train_data, train_labels, model, True, 'temp', True, 'h_filename ')
+    # exit()
     model2 = keras.models.Sequential([
         keras.layers.Dense(units=32,input_shape=(16, 10), name='D1', activation='relu'),
         keras.layers.Flatten(),
@@ -35,11 +41,10 @@ if __name__ == '__main__':
         keras.layers.Dense(10, name='output_layer', activation='softmax')
     ])
     model2.compile('adam', 'categorical_crossentropy')
-
     history = model.fit(train_data, train_labels, epochs=20, batch_size=10, validation_split=0.1, verbose=1)
     history2 = model2.fit(train_data, train_labels, epochs=20, batch_size=10, validation_split=0.1)
-    model.save(filepath)
-    model2.save(filepath2)
+    # model.save(filepath)
+    # model2.save(filepath2)
     # print(history.history)
     # exit()
     dump_to_json(history.history, history_filename)
