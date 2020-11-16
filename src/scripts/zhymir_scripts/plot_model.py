@@ -51,7 +51,7 @@ if __name__ == '__main__':
     model_root = '../../../Task2/models'
     # model_path = os.path.join(model_root, 'zhymir_model_4_layer.h5')
     # model = load_model(model_path, compile=False)
-    history = load_from_json(os.path.join(data_root, 'zhymir_model_4_layer_history'))
+    history = load_from_json(os.path.join(data_root, 'zhymir_model_batch_8_4_layer_history'))
     plot_model_figs(history)
     print(history)
     # exit()

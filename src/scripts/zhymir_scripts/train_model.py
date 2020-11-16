@@ -12,8 +12,8 @@ def train_model(data, labels, model_p, save=False, filename=None, save_history=F
             dump_to_json(model_history.history, h_filename)
 
 if __name__ == '__main__':
-    train_data = np.load('train_test/train_data.npy')
-    train_labels = np.load('train_test/train_labels.npy')
+    train_data = np.load('../../../Task2/data/train_test/train_data.npy')
+    train_labels = np.load('../../../Task2/data/train_test/train_labels.npy')
     print(train_data.shape)
     print(train_labels.shape)
     # exit()

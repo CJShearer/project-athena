@@ -21,22 +21,22 @@ if __name__ == '__main__':
     history_root = '../../../Task2/data'
     filepath = os.path.join(model_root, 'cody_model.h5')
     history_filename = os.path.join(history_root, 'cody_model_history')
-    batch_size = 2
+    batch_size = 10
     num_classifiers = 16
     model = keras.models.Sequential([
         keras.layers.Dense(units=100, input_shape=(num_classifiers, 10), activation='relu', name='D1'),
         keras.layers.Flatten(),
         keras.layers.Dense(10, name='output_layer', activation='softmax')
     ])
-    metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')]
+    metrics = ['accuracy']
     model.compile('adam', 'categorical_crossentropy', metrics=metrics)
 
     history = model.fit(train_data, train_labels, epochs=20, batch_size=batch_size, validation_split=0.1, verbose=0)
     print(history.history.keys())
 
     # summarize history for accuracy
-    plt.plot(history.history['categorical_accuracy'])
-    plt.plot(history.history['val_categorical_accuracy'])
+    plt.plot(history.history['accuracy'])
+    plt.plot(history.history['val_accuracy'])
     plt.title('model accuracy')
     plt.ylabel('accuracy')
     plt.xlabel('epoch')

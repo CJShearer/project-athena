@@ -5,14 +5,25 @@ import keras
 from keras.models import load_model
 model = load_model('../../../Task2/models/zhymir_model_2_layer.h5', compile=False)
 model2 = load_model('../../../Task2/models/zhymir_model_4_layer.h5', compile=False)
-print(model.weights)
-print(model.metrics)
-print(model.summary)
-# keras.models.Sequential.compile()
+model3 = load_model('../../../Task2/models/zhymir_model_batch_8_4_layer.h5', compile=False)
 model.compile(optimizer='adam',
               loss=keras.losses.CategoricalCrossentropy(),
               metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
-result = model.evaluate(np.load('train_test/test_data.npy'), np.load('train_test/test_labels.npy'))
+model2.compile(optimizer='adam',
+              loss=keras.losses.CategoricalCrossentropy(),
+              metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
+model3.compile(optimizer='adam',
+              loss=keras.losses.CategoricalCrossentropy(),
+              metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
+# print(model.weights)
+# print(model.metrics)
+print(model.summary())
+print(model2.summary())
+print(model3.summary())
+# keras.models.Sequential.compile()
+
+result = model.evaluate(np.load('../../../Task2/data/train_test/test_data.npy'), np.load(
+    '../../../Task2/data/train_test/test_labels.npy'))
 print(result)
 exit()
 temp = keras.models.Sequential([

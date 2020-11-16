@@ -45,6 +45,6 @@ for idx in range(len(data_config.get('ae_files'))):
     total_test_y = np.concatenate((total_test_y, test_y))
     # model.fit(train_x, train_y,  callbacks=call_back, epochs=10, batch_size=batch_size)
     # add_checkpoint(filepath_p=filepath, callback_list=call_back)
-np.savez_compressed('train_test', train_data=total_train_x, test_data=total_test_x,
+np.savez_compressed('../../../Task2/data/train_test', train_data=total_train_x, test_data=total_test_x,
                     train_labels=total_train_y, test_labels=total_test_y)
 # model.save(filepath)
