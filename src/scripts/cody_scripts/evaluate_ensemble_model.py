@@ -30,7 +30,7 @@ if __name__ == '__main__':
   # get labels, which are used for each set of 10k predictions
   labels = np.load(os.path.join(data_config.get('dir'), data_config.get('label_file')))
   # get pre-computed predictions of WDs and extract only AEs for testing
-  test_data = np.transpose(np.load('../../../Task2/data/predictions.npz')['arr_0'], (0, 2, 1, 3))[1:len(ae_files)-1]
+  test_data = np.transpose(np.load('../../../Task2/data/predictions.npz')['arr_0'], (0, 2, 1, 3))[1:len(ae_files)+1]
 
   # evaluate on each AE
   results = pd.DataFrame(index=model.metrics_names, columns=ae_files)
