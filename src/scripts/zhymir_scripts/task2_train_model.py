@@ -3,6 +3,7 @@ import numpy as np
 import keras
 from keras.models import load_model
 
+from scripts.cody_scripts.generate_test_data import collect_raw_prediction
 from scripts.zhymir_scripts.task2_functions import *
 from utils.file import load_from_json
 
@@ -29,17 +30,18 @@ labels = np.load(label_file)
 model = load_model('new_model.h5', compile=False)
 model.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
 new_ensemble = athena_with_model(WD_config, model_config, model)
+raw_predict = collect_raw_prediction(WD_config, model_config, )
 # print(type(new_ensemble))
 # exit()
 # new_ensemble.fit(data_bs, labels, batch_size=100)
 # new_ensemble.train_adversarial_pgd(data_bs, labels, max_iter=5)
-print(new_ensemble.evaluate(data_bs, labels))
-attack_args = {'attack': 'pgd', 'description': 'none', 'eps': 0.3, 'eps_step': 0.3/10, 'max_iter': 10,
-               'norm': 'l2', 'targeted': False, 'num_random_init': 0, 'random_eps': False}
-data_adv = generate(new_ensemble._ensemble, (data_bs[:1000], labels[:1000]), attack_args=attack_args)
-print(new_ensemble.evaluate(data_adv, labels[:1000]))
-AE_file = ('../../../data/test_AE-mnist-cnn-clean-cw_l2_lr0.01.npy')
-AE = np.load(AE_file)
-print(new_ensemble.evaluate(AE, labels))
+# print(new_ensemble.evaluate(data_bs, labels))
+# attack_args = {'attack': 'pgd', 'description': 'none', 'eps': 0.3, 'eps_step': 0.3/10, 'max_iter': 10,
+#                'norm': 'l2', 'targeted': False, 'num_random_init': 0, 'random_eps': False}
+# data_adv = generate(new_ensemble._ensemble, (data_bs[:1000], labels[:1000]), attack_args=attack_args)
+# print(new_ensemble.evaluate(data_adv, labels[:1000]))
+# AE_file = ('../../../data/test_AE-mnist-cnn-clean-cw_l2_lr0.01.npy')
+# AE = np.load(AE_file)
+# print(new_ensemble.evaluate(AE, labels))
 # new_ensemble.save_model('new_model.h5')
 # new_ensemble.save_history('new_model')
