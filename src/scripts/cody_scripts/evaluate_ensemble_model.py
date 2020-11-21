@@ -7,15 +7,11 @@ import pandas as pd
 
 from utils.file import load_from_json
 
-if __name__ == '__main__':
-  # path and file to save results
-  results_root = '../../../Task2/results'
-  results_filename = 'cody_model.csv'
+
+def evaluate_ensemble_model(model_path_and_filename, results_path_and_filename=None, save=False):
 
   # load and compile trained model
-  model_root = '../../../Task2/models'
-  model_filepath = os.path.join(model_root, 'cody_model.h5')
-  model = load_model(model_filepath, compile=False)
+  model = load_model(model_path_and_filename, compile=False)
   metrics = [CategoricalAccuracy(dtype='float64')]
   model.compile('adam', 'categorical_crossentropy', metrics=metrics)
 
@@ -46,6 +42,16 @@ if __name__ == '__main__':
   print(results.head(5))
 
   # save results
-  results_path_and_filename = os.path.join(results_root,results_filename)
-  print('>>> Saving results to',results_path_and_filename)
-  results.to_csv(results_path_and_filename)
+  if save:
+    print('>>> Saving results to', results_path_and_filename)
+    results.to_csv(results_path_and_filename)
+
+
+if __name__ == '__main__':
+  # path and file to save results
+  results_path_and_filename = '../../../Task2/results/cody_model.csv'
+
+  # path and file for model to be evaluated
+  model_path_and_filename = '../../../Task2/models/cody_model.h5'
+
+  evaluate_ensemble_model(model_path_and_filename, results_path_and_filename, save=False)
