@@ -1,7 +1,6 @@
 import os
 import keras
 import numpy as np
-from keras.callbacks import ModelCheckpoint
 
 from utils.file import dump_to_json
 
@@ -53,8 +52,7 @@ if __name__ == '__main__':
         keras.layers.Dense(10, name='output_layer', activation='softmax')
     ])
     model3.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
-    call = []
-    history = model.fit(train_data, train_labels, epochs=2, batch_size=1000, validation_split=0.1, verbose=1, callbacks=call)
+    history = model.fit(train_data, train_labels, epochs=20, batch_size=10, validation_split=0.1, verbose=0)
     history2 = model2.fit(train_data, train_labels, epochs=20, batch_size=10, validation_split=0.1, verbose=0)
     history3 = model3.fit(train_data, train_labels, epochs=20, batch_size=8, validation_split=0.1, verbose=0)
     model.save(filepath)
