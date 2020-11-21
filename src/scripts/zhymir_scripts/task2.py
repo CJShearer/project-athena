@@ -21,18 +21,18 @@ from keras.callbacks import ModelCheckpoint
 from keras.models import save_model
 from models.image_processor import transform
 
-
-def shuffle(data, labels):
-    # convert to labels
-    if len(labels.shape) > 1:
-        labels = [np.argmax(p) for p in labels]
-    # shuffle the selected ids
-    id_s = [i for i in range(data.shape[0])]
-    random.shuffle(id_s)
-    # get sampled data and labels
-    samples = np.asarray([data[i] for i in id_s])
-    labels = np.asarray([labels[i] for i in id_s])
-    return samples, labels
+# deprecated
+# def shuffle(data, labels):
+#     # convert to labels
+#     if len(labels.shape) > 1:
+#         labels = [np.argmax(p) for p in labels]
+#     # shuffle the selected ids
+#     id_s = [i for i in range(data.shape[0])]
+#     random.shuffle(id_s)
+#     # get sampled data and labels
+#     samples = np.asarray([data[i] for i in id_s])
+#     labels = np.asarray([labels[i] for i in id_s])
+#     return samples, labels
 
 
 # modified from toy model on stackoverflow
@@ -61,62 +61,62 @@ def train_model(wd, model, x, y, batch_size_p=1, epochs=1,
     if save_checkpoint and filepath_p and callback_list_p:
         add_checkpoint(callback_list_p)
 
-
-def train_ensemble_model(model_p, data_config_p, wd_p, batch_size_p=1, test_size_p=10, save=True, filepath_p=None):
-    # Load data
-    data_file = os.path.join(data_config_p.get('dir'), data_config_p.get('bs_file'))
-    data_bs = np.load(data_file)
-    print(data_bs.shape)
-    # data_bs = np.transpose(data_bs, (1, 0, 2))
-    # exit()
-    # load the corresponding true labels
-    label_file = os.path.join(data_config_p.get('dir'), data_config_p.get('label_file'))
-    labels = np.load(label_file)
-    print('Shape of labels: ', labels.shape)
-    # split train test data to use for model training
-    # subsampling didn't allow for ratios that were too high, so shuffle data instead
-    bs_data, bs_labels = shuffle(data_bs, labels)
-    train_data, test_data, train_labels, test_labels = train_test_split(bs_data, labels, test_size=0.1)
-    # train_data, test_data = bs_data[:-test_size_p], bs_data[-test_size_p:]
-    # train_labels, test_labels = bs_labels[:-test_size_p], bs_labels[-test_size_p:]
-    # make model trained on WD ouputs, or make model that uses WD outputs as input layer
-    # target.fit(train_data, train_labels) [no more]
-    call_backs = []
-    print(train_labels.shape)
-    train_model(wd_p, model_p, train_data, train_labels, batch_size_p=batch_size_p,
-                epochs=5, save_checkpoint=True, filepath_p=filepath_p, callback_list_p=call_backs)
-
-    # save_model(target, filepath=filepath, overwrite=False, include_optimizer=True)
-    # exit()
-    add_checkpoint(filepath_p, call_backs)
-    ae_files = [os.path.join(data_config_p.get('dir'), AE_name) for AE_name in data_config_p.get('ae_files')]
-
-    for AE_file in ae_files:
-        ae_data = np.load(AE_file)
-        # ae_data = np.transpose(ae_data, (1, 0, 2))
-        ae_data, ae_labels = subsampling(ae_data, labels, 10, 0.2)
-        ae_train_data, ae_test_data = ae_data[:-test_size_p], ae_data[-test_size_p:]
-        ae_train_labels, ae_test_labels = ae_labels[:-test_size_p], ae_labels[-test_size_p:]
-        train_model(wd_p, model_p, ae_train_data, ae_train_labels, batch_size_p=batch_size_p, epochs=2,
-                    load_from_checkpoint=True, save_checkpoint=True, filepath_p=filepath_p, callback_list_p=call_backs)
-        # for id, model in pool.items():
-        #     if id == 0: # skip the undefended model, which does not transform the image
-        #         continue
-        #
-        #     key = 'configs{}'.format(id)
-        #     trans_args = WD_config.get(key)
-        #     print('TRANS CONFIG:', trans_args)
-        #     # transform a small subset
-        #     data_trans = transform(data_bs[:50], trans_args)
-        #     fit the transformed images by the corresponding model (weak defense)
-        #     target.fit(AE_train_data, AE_train_labels, callbacks=call_backs)
-        #     add_checkpoint(filepath, call_backs)
-
-    # print('finished')
-    # optional save model
-    if save and filepath_p:
-        model_p.save(filepath_p)
-    return test_data, test_labels
+# deprecated
+# def train_ensemble_model(model_p, data_config_p, wd_p, batch_size_p=1, test_size_p=10, save=True, filepath_p=None):
+#     # Load data
+#     data_file = os.path.join(data_config_p.get('dir'), data_config_p.get('bs_file'))
+#     data_bs = np.load(data_file)
+#     print(data_bs.shape)
+#     # data_bs = np.transpose(data_bs, (1, 0, 2))
+#     # exit()
+#     # load the corresponding true labels
+#     label_file = os.path.join(data_config_p.get('dir'), data_config_p.get('label_file'))
+#     labels = np.load(label_file)
+#     print('Shape of labels: ', labels.shape)
+#     # split train test data to use for model training
+#     # subsampling didn't allow for ratios that were too high, so shuffle data instead
+#     bs_data, bs_labels = shuffle(data_bs, labels)
+#     train_data, test_data, train_labels, test_labels = train_test_split(bs_data, labels, test_size=0.1)
+#     # train_data, test_data = bs_data[:-test_size_p], bs_data[-test_size_p:]
+#     # train_labels, test_labels = bs_labels[:-test_size_p], bs_labels[-test_size_p:]
+#     # make model trained on WD ouputs, or make model that uses WD outputs as input layer
+#     # target.fit(train_data, train_labels) [no more]
+#     call_backs = []
+#     print(train_labels.shape)
+#     train_model(wd_p, model_p, train_data, train_labels, batch_size_p=batch_size_p,
+#                 epochs=5, save_checkpoint=True, filepath_p=filepath_p, callback_list_p=call_backs)
+#
+#     # save_model(target, filepath=filepath, overwrite=False, include_optimizer=True)
+#     # exit()
+#     add_checkpoint(filepath_p, call_backs)
+#     ae_files = [os.path.join(data_config_p.get('dir'), AE_name) for AE_name in data_config_p.get('ae_files')]
+#
+#     for AE_file in ae_files:
+#         ae_data = np.load(AE_file)
+#         # ae_data = np.transpose(ae_data, (1, 0, 2))
+#         ae_data, ae_labels = subsampling(ae_data, labels, 10, 0.2)
+#         ae_train_data, ae_test_data = ae_data[:-test_size_p], ae_data[-test_size_p:]
+#         ae_train_labels, ae_test_labels = ae_labels[:-test_size_p], ae_labels[-test_size_p:]
+#         train_model(wd_p, model_p, ae_train_data, ae_train_labels, batch_size_p=batch_size_p, epochs=2,
+#                     load_from_checkpoint=True, save_checkpoint=True, filepath_p=filepath_p, callback_list_p=call_backs)
+#         # for id, model in pool.items():
+#         #     if id == 0: # skip the undefended model, which does not transform the image
+#         #         continue
+#         #
+#         #     key = 'configs{}'.format(id)
+#         #     trans_args = WD_config.get(key)
+#         #     print('TRANS CONFIG:', trans_args)
+#         #     # transform a small subset
+#         #     data_trans = transform(data_bs[:50], trans_args)
+#         #     fit the transformed images by the corresponding model (weak defense)
+#         #     target.fit(AE_train_data, AE_train_labels, callbacks=call_backs)
+#         #     add_checkpoint(filepath, call_backs)
+#
+#     # print('finished')
+#     # optional save model
+#     if save and filepath_p:
+#         model_p.save(filepath_p)
+#     return test_data, test_labels
 
 
 if __name__ == '__main__':
