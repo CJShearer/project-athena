@@ -3,7 +3,7 @@ import numpy as np
 import keras
 from keras.models import load_model
 
-from scripts.cody_scripts.generate_test_data import collect_raw_prediction
+from scripts.cody_scripts.evaluate_ensemble_model import evaluate_ensemble_model
 from scripts.zhymir_scripts.task2_functions import *
 from utils.file import load_from_json
 
@@ -27,10 +27,10 @@ labels = np.load(label_file)
 #     keras.layers.Dense(10, name='output_layer', activation='softmax')
 # ])
 # model.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
-model = load_model('new_model.h5', compile=False)
-model.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
-new_ensemble = athena_with_model(WD_config, model_config, model)
-raw_predict = collect_raw_prediction(WD_config, model_config, )
+# model = load_model('new_model.h5', compile=False)
+# model.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
+# new_ensemble = athena_with_model(WD_config, model_config, model)
+# raw_predict = collect_raw_prediction(WD_config, model_config, )
 # print(type(new_ensemble))
 # exit()
 # new_ensemble.fit(data_bs, labels, batch_size=100)
@@ -45,3 +45,4 @@ raw_predict = collect_raw_prediction(WD_config, model_config, )
 # print(new_ensemble.evaluate(AE, labels))
 # new_ensemble.save_model('new_model.h5')
 # new_ensemble.save_history('new_model')
+evaluate_ensemble_model('new_model.h5')
