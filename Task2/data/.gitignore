@@ -1,3 +1,7 @@
 predictions.npz
 arr_0.npy
 train_test.npz
+train_test/test_data.npy
+train_test/test_labels.npy
+train_test/train_data.npy
+train_test/train_labels.npy

@@ -1,0 +1,15 @@
+{
+  "dir": "../../../data/",
+  "bs_file": "test_BS-mnist-clean.npy",
+  "label_file": "test_Label-mnist-clean.npy",
+  "ae_files": [
+    "cw_norm_l2_lr_1e-5_iter_10_",
+    "cw_norm_l2_lr_1e-5_iter_20_",
+    "cw_norm_l2_lr_1e-3_iter_10_",
+    "cw_norm_l2_lr_1e-3_iter_20_",
+    "cw_norm_linf_lr_1e-4_iter_10_eps_0-20_",
+    "cw_norm_linf_lr_1e-4_iter_20_eps_0-020_",
+    "cw_norm_linf_lr_1e-4_iter_10_eps_0-010_",
+    "cw_norm_linf_lr_1e-4_iter_20_eps_0-010_"
+  ]
+}
