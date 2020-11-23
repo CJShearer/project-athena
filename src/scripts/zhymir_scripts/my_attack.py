@@ -78,9 +78,9 @@ def generate_ae_with_names(model, data, labels, attack_configs, save=False, outp
 
 
 def my_attack(model_config, data_config, attack_config, ratio=0.1, sub_data_path=None, sub_data_name=None, result_path=None):
-    model_configs = load_from_json(model_config)
-    data_configs = load_from_json(data_config)
-    attack_configs = load_from_json(attack_config)
+    model_configs = load_from_json(model_config) if not isinstance(model_config, dict) else model_config
+    data_configs = load_from_json(data_config) if not isinstance(data_config, dict) else data_config
+    attack_configs = load_from_json(attack_config) if not isinstance(attack_config, dict) else attack_config
 
     # load the targeted model
     model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
@@ -126,6 +126,9 @@ def evaluate_models(trans_configs, model_configs,
         It cannot be None when save is True.
     :return:
     """
+    model_configs = load_from_json(model_configs) if not isinstance(model_configs, dict) else model_configs
+    data_configs = load_from_json(data_configs) if not isinstance(data_configs, dict) else data_configs
+    trans_configs = load_from_json(trans_configs) if not isinstance(trans_configs, dict) else trans_configs
     # Load the baseline defense (PGD-ADT model)
     baseline = load_lenet(file=model_configs.get('pgd_trained'), trans_configs=None,
                                   use_logits=False, wrap=False)
@@ -227,7 +230,7 @@ if __name__ == '__main__':
     # 'subsamples-{}-ratio_{}-{}.npy'
     # generate adversarial examples for a small subset
     # generate_ae_with_names(target, data_bs, labels, attack_configs)
-    my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path, sub_data_name=sub_data_name, result_path=result_root)
-    exit()
-    sub_data_config = os.path.join(config_root, '')
+    # my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path, sub_data_name=sub_data_name, result_path=result_root)
+    # exit()
+    sub_data_config = os.path.join(config_root, 'sub_data_config.json')
     evaluate_models(trans_configs, model_configs, sub_data_config, save=False, output_dir='../../../Task3/results')

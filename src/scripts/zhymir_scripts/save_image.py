@@ -68,10 +68,11 @@ def generate_images(model, data, labels, aes, attack_configs, min_img=1, show=Tr
 # attack_file = load_from_json('./attack-config.json')
 if __name__ == '__main__':
     # parse configurations (into a dictionary) from json file
-    model_configs = load_from_json('../../../Task1/attack2/model-config.json')
-    data_configs = load_from_json('../../../Task1/attack2/sub-data-config.json')
-    attack_configs = load_from_json('../../../Task1/attack2/attack-config.json')
-
+    config_root = '../../configs/task3'
+    model_configs = load_from_json(os.path.join(config_root, 'model_config.json'))
+    data_configs = load_from_json(os.path.join(config_root, 'sub_data_config.json'))
+    attack_configs = load_from_json(os.path.join(config_root, 'attack_cw_config.json'))
+    output = '../../../Task3/images'
     # load the targeted model
     model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
     target = load_lenet(file=model_file, wrap=True)
@@ -84,5 +85,5 @@ if __name__ == '__main__':
     labels = np.load(label_file)
 
     aes = [np.load(os.path.join(data_configs.get('dir'), x)) for x in data_configs.get('ae_files')]
-    generate_images(target, data_bs, labels, aes, attack_configs, show=False, min_img=1, save=True, output_dir='../../../Task1/attack2/images')
+    generate_images(target, data_bs, labels, aes, attack_configs, show=False, min_img=3, save=True, output_dir=output)
     # generate_images(target, data_file, attack_configs, min_img=3)
