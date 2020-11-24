@@ -1,0 +1,13 @@
+{
+    "dir": "../../data/",
+    "bs_file": "subsamples-1000-ratio_0.1-398037.171",
+    "label_file": "sublabels-1000-ratio_0.1-398037.171",
+    "ae_files": [
+      "AE-mnist-cnn-clean-bim_eps0.1_maxiter60.npy",
+      "AE-mnist-cnn-clean-bim_eps0.1_maxiter70.npy",
+      "AE-mnist-cnn-clean-bim_eps0.1_maxiter80.npy",
+      "AE-mnist-cnn-clean-bim_eps0.1_maxiter90.npy",
+      "AE-mnist-cnn-clean-bim_eps0.1_maxiter100.npy"
+    ]
+}
+
