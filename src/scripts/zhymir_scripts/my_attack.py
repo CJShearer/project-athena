@@ -77,7 +77,7 @@ def generate_ae_with_names(model, data, labels, attack_configs, save=False, outp
                 np.save(file, data_adv)
 
 
-def my_attack(model_config, data_config, attack_config, ratio=0.1, sub_data_path=None, sub_data_name=None, result_path=None):
+def my_attack(model_config, data_config, attack_config, generate_sub=False, ratio=0.1, sub_data_path=None, sub_data_name=None, result_path=None):
     model_configs = load_from_json(model_config) if not isinstance(model_config, dict) else model_config
     data_configs = load_from_json(data_config) if not isinstance(data_config, dict) else data_config
     attack_configs = load_from_json(attack_config) if not isinstance(attack_config, dict) else attack_config
@@ -95,10 +95,11 @@ def my_attack(model_config, data_config, attack_config, ratio=0.1, sub_data_path
 
     # generate adversarial examples for a small subset
     # print(len(data_bs))
-    if sub_data_name and sub_data_path:
-        data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath=sub_data_path, filename=sub_data_name)
-    else:
-        data_bs, labels = subsampling(data_bs, labels, 10, ratio)
+    if generate_sub:
+        if sub_data_name and sub_data_path:
+            data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath=sub_data_path, filename=sub_data_name)
+        else:
+            data_bs, labels = subsampling(data_bs, labels, 10, ratio)
     # data_bs = data_bs[:100]
     # labels = labels[:100]
     # print(len(data_bs))
@@ -230,7 +231,7 @@ if __name__ == '__main__':
     # 'subsamples-{}-ratio_{}-{}.npy'
     # generate adversarial examples for a small subset
     # generate_ae_with_names(target, data_bs, labels, attack_configs)
-    # my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path, sub_data_name=sub_data_name, result_path=result_root)
+    my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path, sub_data_name=sub_data_name, result_path=result_root)
     # exit()
     sub_data_config = os.path.join(config_root, 'sub_data_config.json')
     evaluate_models(trans_configs, model_configs, sub_data_config, save=False, output_dir='../../../Task3/results')
