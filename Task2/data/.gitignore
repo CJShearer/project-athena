@@ -1,3 +1,4 @@
 predictions.npz
 arr_0.npy
 train_test.npz
+train_test/*

@@ -7,7 +7,6 @@ import csv
 from attacks.attack import generate
 # from tutorials.craft_adversarial_examples import generate_ae
 from models.athena import ENSEMBLE_STRATEGY, Ensemble
-#from tutorials.eval_model import evaluate
 from utils.data import subsampling
 # parse configurations (into a dictionary) from json file
 from utils.file import load_from_json
@@ -78,10 +77,10 @@ def generate_ae_with_names(model, data, labels, attack_configs, save=False, outp
                 np.save(file, data_adv)
 
 
-def my_attack(model_config, data_config, attack_config, ratio=0.1):
-    model_configs = load_from_json(model_config)
-    data_configs = load_from_json(data_config)
-    attack_configs = load_from_json(attack_config)
+def my_attack(model_config, data_config, attack_config, ratio=0.1, sub_data_path=None, sub_data_name=None, result_path=None):
+    model_configs = load_from_json(model_config) if not isinstance(model_config, dict) else model_config
+    data_configs = load_from_json(data_config) if not isinstance(data_config, dict) else data_config
+    attack_configs = load_from_json(attack_config) if not isinstance(attack_config, dict) else attack_config
 
     # load the targeted model
     model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
@@ -96,11 +95,14 @@ def my_attack(model_config, data_config, attack_config, ratio=0.1):
 
     # generate adversarial examples for a small subset
     # print(len(data_bs))
-    data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath='../../../Task1/attack2/results', filename='10')
+    if sub_data_name and sub_data_path:
+        data_bs, labels = subsampling(data_bs, labels, 10, ratio, filepath=sub_data_path, filename=sub_data_name)
+    else:
+        data_bs, labels = subsampling(data_bs, labels, 10, ratio)
     # data_bs = data_bs[:100]
     # labels = labels[:100]
     # print(len(data_bs))
-    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir="../../../Task1/attack2/results", filenames=data_configs.get('ae_files'))
+    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir=result_path, filenames=data_configs.get('ae_files'))
 
 
 def evaluate_models(trans_configs, model_configs,
@@ -124,6 +126,9 @@ def evaluate_models(trans_configs, model_configs,
         It cannot be None when save is True.
     :return:
     """
+    model_configs = load_from_json(model_configs) if not isinstance(model_configs, dict) else model_configs
+    data_configs = load_from_json(data_configs) if not isinstance(data_configs, dict) else data_configs
+    trans_configs = load_from_json(trans_configs) if not isinstance(trans_configs, dict) else trans_configs
     # Load the baseline defense (PGD-ADT model)
     baseline = load_lenet(file=model_configs.get('pgd_trained'), trans_configs=None,
                                   use_logits=False, wrap=False)
@@ -210,31 +215,21 @@ def evaluate_models(trans_configs, model_configs,
                 print("Save the adversarial examples to file [{}].".format(file))
                 writer = csv.writer(open(file, 'w'))
                 writer.writerow(test_result)
-                # np.save(file, test_result)
-
+                # np.save(file, test_result
 
 if __name__ == '__main__':
-    model_configs = load_from_json('../../../Task1/attack2/model-config.json')
-    data_configs = load_from_json('../../../Task1/attack2/sub-data-config.json')
-    # attack_configs = load_from_json('../../../Task1/attack2/attack-config.json')
-    # model_configs = load_from_json('../../practice task1/md.json')
-
-    # load the targeted model
-    model_file = os.path.join(model_configs.get("dir"), model_configs.get("um_file"))
-    target = load_lenet(file=model_file, wrap=True)
-
-    # load the benign samples
-    data_file = os.path.join(data_configs.get('dir'), data_configs.get('bs_file'))
-    data_bs = np.load(data_file)
-    # load the corresponding true labels
-    label_file = os.path.join(data_configs.get('dir'), data_configs.get('label_file'))
-    labels = np.load(label_file)
+    config_root = '../../configs/task3'
+    result_root = '../../../Task3/results'
+    model_configs = os.path.join(config_root, 'model_config.json')
+    data_configs = os.path.join(config_root, 'data_config.json')
+    attack_configs = os.path.join(config_root, 'attack_cw_config.json')
+    trans_configs = os.path.join(config_root, 'athena-mnist.json')
+    sub_data_path = '../../../Task3/data'
+    sub_data_name = '1000'
+    # 'subsamples-{}-ratio_{}-{}.npy'
     # generate adversarial examples for a small subset
     # generate_ae_with_names(target, data_bs, labels, attack_configs)
+    # my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path, sub_data_name=sub_data_name, result_path=result_root)
     # exit()
-    # my_attack('model-config.json', 'data-config.json', 'attack-config.json', ratio=0.001)
-    trans_configs = load_from_json('../../../Task1/attack2/athena-mnist.json')
-    # model_configs = load_from_json('model-config.json')
-    # data_configs = load_from_json('../../../Task1/attack2/sub-data-config.json')
-    data_configs = load_from_json('../../practice task1/result/dt2.json')
-    evaluate_models(trans_configs, model_configs, data_configs, save=False, output_dir='../../../Task1/results')
+    sub_data_config = os.path.join(config_root, 'sub_data_config.json')
+    evaluate_models(trans_configs, model_configs, sub_data_config, save=False, output_dir='../../../Task3/results')

@@ -1,0 +1,63 @@
+{
+  "num_attacks": 8,
+  "configs0": {
+  "attack": "cw",
+  "description": "cw_norm_l2_lr_1e-5_iter_10_",
+  "norm": "l2",
+  "lr": 1e-5,
+  "max_iter": 10
+  },
+  "configs1": {
+  "attack": "cw",
+  "description": "cw_norm_l2_lr_1e-5_iter_20_",
+  "norm": "l2",
+  "lr": 1e-5,
+  "max_iter": 20
+  },
+  "configs2": {
+  "attack": "cw",
+  "description": "cw_norm_l2_lr_1e-3_iter_10_",
+  "norm": "l2",
+  "lr": 1e-3,
+  "max_iter": 10
+  },
+  "configs3": {
+  "attack": "cw",
+  "description": "cw_norm_l2_lr_1e-3_iter_20_",
+  "norm": "l2",
+  "lr": 1e-3,
+  "max_iter": 20
+  },
+  "configs4": {
+  "attack": "cw",
+  "description": "cw_norm_linf_lr_1e-4_iter_10_eps_0-20_",
+  "norm": "linf",
+  "eps": 0.2,
+  "lr": 1e-4,
+  "max_iter": 10
+  },
+  "configs5": {
+  "attack": "cw",
+  "description": "cw_norm_linf_lr_1e-4_iter_20_eps_0-020_",
+  "norm": "linf",
+  "eps": 0.2,
+  "lr": 1e-4,
+  "max_iter": 20
+  },
+  "configs6": {
+  "attack": "cw",
+  "description": "cw_norm_linf_lr_1e-4_iter_10_eps_0-010_",
+  "norm": "linf",
+  "eps": 0.1,
+  "lr": 1e-4,
+  "max_iter": 10
+  },
+  "configs7": {
+  "attack": "cw",
+  "description": "cw_norm_linf_lr_1e-4_iter_20_eps_0-010_",
+  "norm": "linf",
+  "eps": 0.1,
+  "lr": 1e-4,
+  "max_iter": 20
+  }
+}
