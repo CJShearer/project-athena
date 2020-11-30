@@ -15,7 +15,7 @@ from utils.model import load_lenet, load_pool
 
 
 # copied from tutorial modified to use names in data config
-def generate_ae_with_names(model, data, labels, attack_configs, save=False, output_dir=None, filenames=None):
+def generate_ae_with_names(model, data, labels, attack_configs, save=False, output_dir=None, filenames=None, save_img=True, show=True, num_img=3, img_output=None):
     """
     Generate adversarial examples
     :param model: WeakDefense. The targeted model.
@@ -49,7 +49,7 @@ def generate_ae_with_names(model, data, labels, attack_configs, save=False, outp
         print(">>> error rate:", err)
 
         # plotting some examples
-        num_plotting = min(data.shape[0], 3)
+        num_plotting = min(data.shape[0], num_img)
         for i in range(num_plotting):
             img = data_adv[i].reshape((img_rows, img_cols))
             plt.imshow(img, cmap='gray')
@@ -58,7 +58,14 @@ def generate_ae_with_names(model, data, labels, attack_configs, save=False, outp
                                         predictions[i]
                                         )
             plt.title(title)
-            plt.show()
+            if save_img:
+                if img_output is None:
+                    raise ValueError('output directory cannot be None if save is true')
+                name = '{}_image_{}.png'.format(attack_configs.get(key).get("description"), i)
+                filepath = os.path.join(output_dir, name)
+                plt.savefig(filepath)
+            if show:
+                plt.show()
             plt.close()
 
         # save the adversarial example
@@ -77,7 +84,8 @@ def generate_ae_with_names(model, data, labels, attack_configs, save=False, outp
                 np.save(file, data_adv)
 
 
-def my_attack(model_config, data_config, attack_config, generate_sub=False, ratio=0.1, sub_data_path=None, sub_data_name=None, result_path=None):
+def my_attack(model_config, data_config, attack_config, generate_sub=False, ratio=0.1, sub_data_path=None,
+              sub_data_name=None, result_path=None, save_img=True, show=True, img_output=None):
     model_configs = load_from_json(model_config) if not isinstance(model_config, dict) else model_config
     data_configs = load_from_json(data_config) if not isinstance(data_config, dict) else data_config
     attack_configs = load_from_json(attack_config) if not isinstance(attack_config, dict) else attack_config
@@ -103,7 +111,9 @@ def my_attack(model_config, data_config, attack_config, generate_sub=False, rati
     # data_bs = data_bs[:100]
     # labels = labels[:100]
     # print(len(data_bs))
-    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True, output_dir=result_path, filenames=data_configs.get('ae_files'))
+    generate_ae_with_names(model=target, data=data_bs, labels=labels, attack_configs=attack_configs, save=True,
+                           output_dir=result_path, filenames=data_configs.get('ae_files'),
+                           save_img=save_img, show=show, img_output=img_output)
 
 
 def evaluate_models(trans_configs, model_configs,
@@ -222,16 +232,18 @@ def evaluate_models(trans_configs, model_configs,
 if __name__ == '__main__':
     config_root = '../../configs/task3'
     result_root = '../../../Task3/results'
+    image_root = '../../../Task3/images'
     model_configs = os.path.join(config_root, 'model_config.json')
-    data_configs = os.path.join(config_root, 'data_config.json')
-    attack_configs = os.path.join(config_root, 'attack_cw_config.json')
+    data_configs = os.path.join(config_root, 'data_cw_config.json')
+    attack_configs = os.path.join(config_root, 'attack_2_cw_config.json')
     trans_configs = os.path.join(config_root, 'athena-mnist.json')
     sub_data_path = '../../../Task3/data'
     sub_data_name = '1000'
     # 'subsamples-{}-ratio_{}-{}.npy'
     # generate adversarial examples for a small subset
     # generate_ae_with_names(target, data_bs, labels, attack_configs)
-    my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path, sub_data_name=sub_data_name, result_path=result_root)
+    # my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path,
+    #           sub_data_name=sub_data_name, result_path=result_root, save_img=True, show=False, img_output=image_root)
     # exit()
-    sub_data_config = os.path.join(config_root, 'sub_data_config.json')
-    evaluate_models(trans_configs, model_configs, sub_data_config, save=False, output_dir='../../../Task3/results')
+    # sub_data_config = os.path.join(config_root, 'sub_data_config.json')
+    evaluate_models(trans_configs, model_configs, data_configs, save=True, output_dir='../../../Task3/results')
