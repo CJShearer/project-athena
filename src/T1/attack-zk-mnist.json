@@ -2,18 +2,18 @@
   "num_attacks": 5,
   "configs0": {
     "attack": "pgd",
-    "description": "PGD_eps0.3",
-    "eps": 0.3
+    "description": "PGD_eps0.1",
+    "eps": 0.1
   },
   "configs1": {
     "attack": "pgd",
-    "description": "PGD_eps0.5",
-    "eps": 0.5
+    "description": "PGD_eps0.3",
+    "eps": 0.3
   },
   "configs2": {
     "attack": "pgd",
-    "description": "PGD_eps0.1",
-    "eps": 0.1
+    "description": "PGD_eps0.5",
+    "eps": 0.5
   },
   "configs3": {
     "attack": "pgd",
