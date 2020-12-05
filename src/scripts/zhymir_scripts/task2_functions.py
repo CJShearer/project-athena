@@ -177,7 +177,7 @@ class athena_with_model():
         self._callbacks = []
         self._history = dict()
 
-    def fit(self, input_images, labels, batch_size=128, load_progress=False, save_progress=False, checkpoint_path=None):
+    def fit(self, input_images, labels, batch_size=128, load_progress=False, save_history=True, save_progress=False, checkpoint_path=None):
         print("fitting")
         wd_predictions = self.__get_wd_predictions__(input_images)
         history = None
@@ -188,7 +188,8 @@ class athena_with_model():
         if save_progress and checkpoint_path is not None:
             checkpoint = ModelCheckpoint(checkpoint_path + '_checkpoint', monitor='loss', verbose=1, save_best_only=False, mode='min')
             self._callbacks.append(checkpoint)
-        # self._history = history.history if history is not None else self._history
+        if save_history:
+            self._history = history.history if history is not None else self._history
         return history.history
 
     def predict(self, input_images):
@@ -213,7 +214,7 @@ class athena_with_model():
                 print('generating data')
                 data_adv = generate(self._ensemble, item, attack_args=attack_args)
                 print('data generated, fitting to adversarial')
-                history = self.fit(data_adv, item[1], batch_size=10, load_progress=True, save_progress=True, checkpoint_path='new_ensemble_checkpoint')
+                history = self.fit(data_adv, item[1], batch_size=10, load_progress=True, save_history=False, save_progress=True, checkpoint_path='new_ensemble_checkpoint')
                 self._history = combine_history(self._history, history)
 
     def save_history(self, filename):
