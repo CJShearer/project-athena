@@ -30,9 +30,9 @@ labels = np.load(label_file)
 #     keras.layers.Dense(10, name='output_layer', activation='softmax')
 # ])
 # model.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
-model = load_model(adv_model_name, compile=False)
-model.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
-new_ensemble = athena_with_model(WD_config, model_config, model)
+# model = load_model(model_name, compile=False)
+# model.compile('adam', 'categorical_crossentropy', metrics=[keras.metrics.CategoricalAccuracy(dtype='float64')])
+# new_ensemble = athena_with_model(WD_config, model_config, model)
 # raw_predict = collect_raw_prediction(WD_config, model_config, )
 # print(type(new_ensemble))
 # exit()
@@ -51,37 +51,4 @@ new_ensemble = athena_with_model(WD_config, model_config, model)
 # AE = np.load(AE_file)
 # print(new_ensemble.evaluate(AE, labels))
 # evaluate_ensemble_model(model_name)
-# evaluate_ensemble_model(adv_model_name)
-AEs = ['AE-mnist-cnn-clean-bim_eps0.1_maxiter50.npy', 'AE-mnist-cnn-clean-bim_eps0.1_maxiter60.npy',
-'cw_norm_linf_lr_1e-4_iter_20_eps_0-010_.npy', 'AE-mnist-cnn-clean-bim_eps0.3_maxiter50.npy',
-'cw_norm_l2_lr_1e-5_iter_30_.npy',
-'cw_norm_linf_lr_1e-4_iter_20_eps_0-020_.npy',
-'cw_norm_l2_lr_1e-5_iter_50_.npy',
-'cw_norm_linf_lr_1e-4_iter_10_eps_0-010_.npy',
-'cw_norm_linf_lr_1e-4_iter_30_eps_0-010_.npy',
-'cw_norm_l2_lr_1e-5_iter_10_.npy',
-'cw_norm_l2_lr_1e-3_iter_20_.npy',
-'AE-mnist-cnn-clean-bim_eps0.2_maxiter60.npy',
-'AE-mnist-cnn-clean-bim_eps0.3_maxiter70.npy',
-'AE-mnist-cnn-clean-bim_eps0.3_maxiter60.npy',
-'cw_norm_linf_lr_1e-4_iter_10_eps_0-20_.npy',
-'cw_norm_linf_lr_1e-4_iter_50_eps_0-20_.npy',
-'cw_norm_linf_lr_1e-4_iter_50_eps_0-010_.npy',
-'cw_norm_l2_lr_1e-3_iter_50_.npy',
-'cw_norm_l2_lr_1e-5_iter_20_.npy',
-'AE-mnist-cnn-clean-bim_eps0.2_maxiter70.npy',
-'cw_norm_l2_lr_1e-3_iter_10_.npy',
-'cw_norm_l2_lr_1e-3_iter_30_.npy',
-'AE-mnist-cnn-clean-bim_eps0.1_maxiter70.npy',
-'cw_norm_linf_lr_1e-4_iter_30_eps_0-020_.npy',
-'AE-mnist-cnn-clean-bim_eps0.2_maxiter50.npy'
-]
-AEs = [os.path.join('../../../Task2_Update/Task1_AEs', AE) for AE in AEs]
-sublabels = np.load(os.path.join('../../../Task2_Update/Task1_AEs', 'sublabels-1000-ratio_0.1-398037.171.npy'))
-sublabels = np.array(list(map(lambda x: [0]*x + [1] + [0]*(10-1-x), sublabels))) # convert to usable format
-# new_ensemble.evaluate(data_bs, labels)
-for AE in AEs:
-    AE = np.load(AE)
-    new_ensemble.predict(AE)
-    evaluation = new_ensemble.evaluate(AE, sublabels)
-    print(evaluation)
+evaluate_ensemble_model(adv_model_name)
