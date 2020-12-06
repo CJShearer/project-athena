@@ -1,3 +1,5 @@
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 import keras
@@ -76,6 +78,24 @@ def combine_history(history_1, history_2):
     # assuming they're lists
     combined = {key: (history_1[key]+history_2[key]) if key in history_1 else history_2[key] for key in history_1}
     return combined
+
+
+def convert_labels(labels):
+    return np.array(list(map(lambda x: [0]*x + [1] + [0]*(10-1-x), labels))) # convert to usable format
+
+
+def evaluate_AEs(ensemble, data_config, convert=True):
+    if isinstance(data_config, str):
+        data_config = load_from_json(data_config)
+    AEs = [os.path.join(data_config.get('dir'), name) for name in data_config.get('ae_files')]
+    labels = os.path.join(data_config.get('dir'), data_config.get('label_file'))
+    if convert:
+        labels = convert_labels(labels)
+    for AE in AEs:
+        evaluation = ensemble.evaluate(AE, labels)
+        print(evaluation)
+
+
 
 # class inner_model(ClassifierNeuralNetwork, Classifier):
 #     def __init__(self):
