@@ -1,0 +1,15 @@
+{
+  "dir": "../../../Task3/data/",
+  "bs_file": "subsamples-1000-ratio_0.1-398037.171.npy",
+  "label_file": "sublabels-1000-ratio_0.1-398037.171.npy",
+  "ae_files": [
+    "cw_norm_l2_lr_1e-5_iter_50_.npy",
+    "cw_norm_l2_lr_1e-5_iter_30_.npy",
+    "cw_norm_l2_lr_1e-3_iter_50_.npy",
+    "cw_norm_l2_lr_1e-3_iter_30_.npy",
+    "cw_norm_linf_lr_1e-4_iter_50_eps_0-20_.npy",
+    "cw_norm_linf_lr_1e-4_iter_30_eps_0-020_.npy",
+    "cw_norm_linf_lr_1e-4_iter_50_eps_0-010_.npy",
+    "cw_norm_linf_lr_1e-4_iter_30_eps_0-010_.npy"
+  ]
+}
