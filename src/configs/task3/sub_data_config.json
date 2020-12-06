@@ -1,5 +1,5 @@
 {
-  "dir": "../../../Task3/data/",
+  "dir": "../../../Task1_update/data/",
   "bs_file": "subsamples-1000-ratio_0.1-398037.171.npy",
   "label_file": "sublabels-1000-ratio_0.1-398037.171.npy",
   "ae_files": [

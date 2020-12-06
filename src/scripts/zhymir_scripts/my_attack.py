@@ -240,7 +240,7 @@ if __name__ == '__main__':
     sub_data_name = '1000'
     # 'subsamples-{}-ratio_{}-{}.npy'
     # generate adversarial examples for a small subset
-    # generate_ae_with_names(target, data_bs, labels, attack_configs)
+    generate_ae_with_names(target, data_bs, labels, attack_configs)
     # my_attack(model_configs, data_configs, attack_configs, ratio=0.1, sub_data_path=sub_data_path,
     #           sub_data_name=sub_data_name, result_path=result_root, save_img=True, show=False, img_output=image_root)
     # exit()
