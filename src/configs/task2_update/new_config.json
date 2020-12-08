@@ -1,0 +1,14 @@
+{
+"dir": "../../../task2_update/task1_AEs",
+    "bs_file": "subsamples-1000-ratio_0.1-398037.171.npy",
+    "label_file": "sublabels-1000-ratio_0.1-398037.171.npy",
+    "ae_files": [
+
+      "PGD_eps0.11.npy",
+      "PGD_eps0.13.npy",
+      "PGD_eps0.24.npy",
+      "PGD_eps0.25.npy",
+      "PGD_eps0.27.npy"
+
+    ]
+}
